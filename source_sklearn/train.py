@@ -7,8 +7,7 @@ import pandas as pd
 from sklearn.externals import joblib
 
 ## TODO: Import any additional libraries you need to define a model
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 # Provided model load function
 def model_fn(model_dir):
     """Load model from the model_dir. This is the same model that is saved
@@ -39,9 +38,8 @@ if __name__ == '__main__':
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAINING'])
     
     ## TODO: Add any additional arguments that you will need to pass into your model
-    parser.add_argument('--n_estimators', type=int, default=50)
-    parser.add_argument('--learning_rate', type=float, default=1.0)
-    parser.add_argument('--max_depth', type = int, default = 1) 
+    parser.add_argument('--n_estimators', type=int, default=100)
+ 
     # args holds all passed-in arguments
     args = parser.parse_args()
 
@@ -58,7 +56,7 @@ if __name__ == '__main__':
     
 
     ## TODO: Define a model 
-    model = AdaBoostClassifier(base_estimator = DecisionTreeClassifier(max_depth = args.max_depth), n_estimators=args.n_estimators, learning_rate=args.learning_rate, random_state=17) 
+    model = RandomForestClassifier(n_estimators=args.n_estimators, random_state=17) 
     
     
     ## TODO: Train the model
